@@ -30,7 +30,7 @@ public class DandelionAutoConfiguration {
      * 初始化的时候，检查服务端是否是开启状态
      * @return
      */
-    @Bean
+    //@Bean
     public void getRoute() {
         String serverAddr = serverProperties.getServerAddr();
         RestTemplate restTemplate = getRestTemplate();

@@ -96,7 +96,7 @@ feidian:
     gateway:
       discovery:
         server-addr: localhost:8848 # 将服务注册到gateway，这个是gateway的服务地址
-      route:
+      routeDefinition:
         id: user_route							# 指定路由唯一标识
         uri: http://localhost:9999/				# 指定路由服务的地址，记得是uri不是url
         predicates:

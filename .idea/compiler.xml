@@ -3,6 +3,13 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dandelion-server" />
+        <module name="dandelion-client" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dandelion-test" target="1.8" />
@@ -11,7 +18,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="dandelion-client" options="-parameters" />
-      <module name="dandelion-server" options="" />
+      <module name="dandelion-server" options="-parameters" />
       <module name="dandelion-test" options="-parameters" />
     </option>
   </component>

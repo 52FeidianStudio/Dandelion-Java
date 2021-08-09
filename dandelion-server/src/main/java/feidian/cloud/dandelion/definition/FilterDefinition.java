@@ -1,4 +1,4 @@
-package feidian.cloud.dandelion.base;
+package feidian.cloud.dandelion.definition;
 
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
@@ -12,7 +12,7 @@ import java.util.Map;
  */
 @Validated
 @Data
-public class FilterProperties {
+public class FilterDefinition {
     @NotNull
     private String name;
     private Map<String, String> args = new LinkedHashMap<>();
