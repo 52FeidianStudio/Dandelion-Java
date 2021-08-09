@@ -42,7 +42,6 @@ public class DandelionAutoConfiguration {
         /**
          * 如果连接超时就抛出异常
          */
-
     }
     @Bean
     public RestTemplate getRestTemplate() {

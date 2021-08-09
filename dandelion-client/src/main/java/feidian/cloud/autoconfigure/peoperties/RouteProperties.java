@@ -19,11 +19,11 @@ import java.util.UUID;
 @ConfigurationProperties(prefix = "dandelion.route")
 public class RouteProperties {
     /**
-     * 路由id，默认是uuid
+     * 路由id，命名，默认是uuid
      */
     private String id = UUID.randomUUID().toString();
     /**
-     * uri
+     * url
      */
     private String url = "localhost";
     /**
