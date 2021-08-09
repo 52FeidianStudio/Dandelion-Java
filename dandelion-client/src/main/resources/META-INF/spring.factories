@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+feidian.cloud.autoconfigure.config.DandelionAutoConfiguration
