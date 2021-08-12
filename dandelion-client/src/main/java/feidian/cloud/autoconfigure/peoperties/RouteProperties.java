@@ -33,5 +33,5 @@ public class RouteProperties {
     /**
      * 是否是通过引入starter依赖添加的配置，用于判断是否要进行心跳检查
      */
-    private boolean isFormClient = true;
+    private boolean client = true;
 }

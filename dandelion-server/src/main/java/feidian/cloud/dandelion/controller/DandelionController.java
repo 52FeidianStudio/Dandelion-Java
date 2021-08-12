@@ -21,7 +21,7 @@ public class DandelionController {
      * key是路由的id
      * value是RouteDefinition对象
      */
-    public static Map<String, RouteDefinition> routeMap = new HashMap<>();
+    public static Map<String, RouteDefinition> pathRouteMap = new HashMap<>();
 
     /**
      * 和客户端进行心跳检查的接口
