@@ -13,6 +13,7 @@ import java.util.Set;
 public class PathUtils {
     /**
      * 根据用户请求的路径，返回对应的path断言的路径，然后程序员就可以通过path获取到route对象了
+     *
      * @return
      */
     public static String matchPath(String urlPath) {
@@ -29,12 +30,13 @@ public class PathUtils {
         }
         return null;
     }
+
     /**
      * 将路径的/**进行处理，返回干净的路径
      */
     public static String stripTail(String path) {
         if (path.endsWith("**")) {
-            return path.substring(0,path.length()-2);
+            return path.substring(0, path.length() - 2);
         } else {
             return path;
         }

@@ -1,4 +1,4 @@
-package feidian.cloud.autoconfigure.controller;
+package feidian.cloud.dandelion.dandelion;
 
 import feidian.cloud.autoconfigure.peoperties.RouteProperties;
 import org.springframework.beans.factory.annotation.Autowired;

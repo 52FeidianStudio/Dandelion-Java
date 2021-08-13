@@ -2,6 +2,7 @@ package feidian.cloud.dandelion.definition;
 
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
+
 import javax.validation.constraints.NotNull;
 import java.util.LinkedHashMap;
 import java.util.Map;

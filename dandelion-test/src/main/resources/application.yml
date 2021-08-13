@@ -1,0 +1,9 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: test
+dandelion:
+  route:
+    id: aaa
+    url: localhost:8001

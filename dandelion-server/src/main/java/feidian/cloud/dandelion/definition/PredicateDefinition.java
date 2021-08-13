@@ -31,8 +31,9 @@ public class PredicateDefinition implements RoutePredicateBase {
 
     /**
      * 默认实现的返回结果是false
+     *
      * @param routeDefinition 是待校验的路由对象
-     * @param toCheck 是要检验的信息
+     * @param toCheck         是要检验的信息
      * @return
      */
     @Override

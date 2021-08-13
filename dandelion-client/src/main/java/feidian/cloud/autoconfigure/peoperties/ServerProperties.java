@@ -19,7 +19,7 @@ public class ServerProperties {
     /**
      * 服务器地址
      */
-    private String serverAddr = "localhost:8000";
+    private String serverAddr = "http://localhost:8000";
     /**
      * 连接超时时间默认为3秒
      */
