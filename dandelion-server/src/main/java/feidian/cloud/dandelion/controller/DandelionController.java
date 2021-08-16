@@ -29,31 +29,19 @@ public class DandelionController {
      */
     public static Map<String, RouteDefinition> idRouteMap = new HashMap<>();
     /**
-     * key是路由断言的路径
-     * value是RouteDefinition对象
-     */
-    public static Map<String, RouteDefinition> pathRouteMap = new HashMap<>();
-    /**
-     * 和客户端进行心跳检查的接口
-     */
-    @RequestMapping("/heart")
-    public void heart() {
-        System.out.println("和客户端进行心跳检查的接口");
-    }
-    /**
      * 接收配置信息的接口
      */
     @RequestMapping("/client")
     public Object client(@RequestBody RouteProperties routeProperties) {
-        log.info("客户端连接，信息为{}",routeProperties.toString());
         //返回信息
-        Map<Object, Object> map = new HashMap<>();
+        Map<String, Integer> map = new HashMap<>(2);
         //RouteProperties转化为RouteDefinition
         try {
             RouteDefinition routeDefinition = RouteProperties2RouteDefinition.change(routeProperties);
             //初始化配置信息到map中
             idRouteMap.put(routeDefinition.getId(),routeDefinition);
             map.put("code",200);
+            log.info("客户端连接成功，信息为{}",routeProperties.toString());
         } catch (Exception e) {
             log.error("客户端配置有误");
             map.put("code",400);

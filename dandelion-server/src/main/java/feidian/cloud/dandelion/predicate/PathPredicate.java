@@ -2,7 +2,9 @@ package feidian.cloud.dandelion.predicate;
 
 import feidian.cloud.dandelion.definition.PredicateDefinition;
 import feidian.cloud.dandelion.definition.RouteDefinition;
+import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,11 +14,19 @@ import java.util.List;
  * @email 970586718@qq.com
  * @date 2021-08-09 15:43
  */
+@Data
+public class PathPredicate implements PredicateDefinition {
+    /**
+     * 断言的名字
+     */
+    private String name;
+    /**
+     * 配置的信息
+     */
+    private List<String> args = new ArrayList<>();
 
-public class PathRoutePredicateFactory extends PredicateDefinition {
-
-    public PathRoutePredicateFactory() {
-        this.setName("PathRoutePredicateFactory");
+    public PathPredicate(List<String> args) {
+        this.args = args;
     }
 
     @Override

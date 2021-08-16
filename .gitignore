@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+dandelion-client/dandelion-client.iml
+dandelion-server/dandelion-server.iml
+dandelion-test/dandelion-test.iml

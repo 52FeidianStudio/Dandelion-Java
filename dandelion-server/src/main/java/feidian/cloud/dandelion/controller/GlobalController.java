@@ -1,5 +1,6 @@
 package feidian.cloud.dandelion.controller;
 
+import cn.hutool.http.HttpUtil;
 import feidian.cloud.dandelion.definition.RouteDefinition;
 import feidian.cloud.dandelion.utils.IPUtils;
 import feidian.cloud.dandelion.utils.PredicateUtils;
@@ -7,10 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Zhang Ruilong
@@ -32,23 +37,28 @@ public class GlobalController {
      * @return 返回请求转发后的信息
      */
     @RequestMapping("/**")
-    public String demo(HttpServletRequest request) {
+    public String demo(HttpServletRequest request, HttpServletResponse response, HashMap<String, Object> paramMap) {
         //请求的路径，例如/test
         String remoteAddr = request.getRemoteHost();
         System.out.println(remoteAddr);
         String requestUri = request.getRequestURI();
         log.info("全局的入口，请求的地址是{}", requestUri);
         String ipAddr = IPUtils.getIpAddr(request);
-        log.info("请求的IP地址是{}", ipAddr);
-        List<RouteDefinition> routeDefinitionList = PredicateUtils.matchRoute();
+        log.info("发起请求的IP地址是{}", ipAddr);
+        Set<RouteDefinition> routeDefinitionList = PredicateUtils.matchRoute();
         if (routeDefinitionList == null) {
             return "没有匹配到路由";
         } else {
             //todo 开始进行全局过滤
             for (RouteDefinition routeDefinition : routeDefinitionList) {
                 //todo 进入请求前局部过滤器
+                //这里的过滤可能已经包含了对requestUri的过滤
+                //todo 进行转发请求
+                if ("GET".equals(request.getMethod())) {
+                    String result = HttpUtil.get(routeDefinition.getUrl()+requestUri,paramMap);
+                } else {
 
-                //进行转发请求
+                }
 
                 //todo 进入请求后局部过滤器
             }
