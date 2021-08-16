@@ -1,20 +1,29 @@
 package feidian.cloud.dandelion.utils;
 
 import feidian.cloud.dandelion.controller.DandelionController;
+import feidian.cloud.dandelion.definition.RouteDefinition;
 
+import java.util.List;
 import java.util.Set;
 
 /**
  * @author Zhang Ruilong
  * @email 970586718@qq.com
  * @date 2021-08-10 17:17
+ * 这个类有个静态方法matchRoute，
  */
 
-public class PathUtils {
+public class PredicateUtils {
+    /**
+     * 返回一个路由list，表示符合断言的路由
+     */
+    public static List<RouteDefinition> matchRoute() {
+
+        return null;
+    }
+
     /**
      * 根据用户请求的路径，返回对应的path断言的路径，然后程序员就可以通过path获取到route对象了
-     *
-     * @return
      */
     public static String matchPath(String urlPath) {
         Set<String> pathKeySet = DandelionController.pathRouteMap.keySet();

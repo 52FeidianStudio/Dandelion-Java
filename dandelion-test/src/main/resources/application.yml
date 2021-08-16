@@ -7,3 +7,8 @@ dandelion:
   route:
     id: aaa
     url: localhost:8001
+    predicates:
+      - Path=adada,dadada
+      - hello=adadada
+    filters:
+      - StripPrefix=1

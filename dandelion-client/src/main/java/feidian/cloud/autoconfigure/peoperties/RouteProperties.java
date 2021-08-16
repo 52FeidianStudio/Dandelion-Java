@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -35,4 +36,12 @@ public class RouteProperties {
      * 是否是通过引入starter依赖添加的配置，用于判断是否要进行心跳检查
      */
     private boolean client = true;
+    /**
+     * 断言列表，每个断言有自己的前缀
+     */
+    private List<String> predicates;
+    /**
+     * 过滤列表
+     */
+    private List<String> filters;
 }
