@@ -1,8 +1,12 @@
 package feidian.cloud.dandelion.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author Zhang Ruilong
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
     @RequestMapping("/test")
-    public String test() {
-        return "测试成功";
+    public Object test(Map<String, String> map) {
+        return map;
     }
 }

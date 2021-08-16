@@ -6,10 +6,8 @@ import feidian.cloud.dandelion.utils.RouteProperties2RouteDefinition;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +36,24 @@ public class DandelionController {
         //RouteProperties转化为RouteDefinition
         try {
             RouteDefinition routeDefinition = RouteProperties2RouteDefinition.change(routeProperties);
+            //对url地址进行清洗
+            String url = routeDefinition.getUrl();
+            if (url.split(":").length<2) {
+                //如果没加https://或http请求协议的就默认加位http://
+                url = "http://"+url;
+            }
+            if (url.lastIndexOf("/") == url.length()-1) {
+                //如果最后加上了/就给他删掉，即http://localhost:8000/-->http://localhost:8000
+                url = url.substring(0, url.length() - 2);
+            }
+            routeDefinition.setUrl(url);
             //初始化配置信息到map中
             idRouteMap.put(routeDefinition.getId(),routeDefinition);
             map.put("code",200);
             log.info("客户端连接成功，信息为{}",routeProperties.toString());
         } catch (Exception e) {
             log.error("客户端配置有误");
+            e.printStackTrace();
             map.put("code",400);
         }
         return map;

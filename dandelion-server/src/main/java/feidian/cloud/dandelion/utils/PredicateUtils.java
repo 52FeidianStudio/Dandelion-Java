@@ -4,6 +4,7 @@ import feidian.cloud.dandelion.controller.DandelionController;
 import feidian.cloud.dandelion.definition.PredicateDefinition;
 import feidian.cloud.dandelion.definition.RouteDefinition;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -17,20 +18,17 @@ public class PredicateUtils {
     /**
      * 返回一个路由list，表示符合断言的路由
      */
-    public static Set<RouteDefinition> matchRoute() {
-        //要返回的集合
-        Set<RouteDefinition> result = new HashSet<>();
+    public static RouteDefinition matchRoute(HttpServletRequest request) {
         Collection<RouteDefinition> routeDefinitions = DandelionController.idRouteMap.values();
         for (RouteDefinition routeDefinition : routeDefinitions) {
             List<PredicateDefinition> predicates = routeDefinition.getPredicates();
-            for (int i = 0; i < predicates.size(); i++) {
-                if (predicates.get(i).predicate(routeDefinition,"xxx")) {
-                    result.add(routeDefinition);
-                    break;
+            for (PredicateDefinition predicate : predicates) {
+                if (predicate.predicate(routeDefinition, request)) {
+                    return routeDefinition;
                 }
             }
         }
-        return result;
+        return null;
     }
 
     ///**

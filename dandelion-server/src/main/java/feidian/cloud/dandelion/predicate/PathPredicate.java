@@ -4,6 +4,7 @@ import feidian.cloud.dandelion.definition.PredicateDefinition;
 import feidian.cloud.dandelion.definition.RouteDefinition;
 import lombok.Data;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,34 +20,34 @@ public class PathPredicate implements PredicateDefinition {
     /**
      * 断言的名字
      */
-    private String name;
+    private String name="Path";
     /**
      * 配置的信息
      */
-    private List<String> args = new ArrayList<>();
-
+    private List<String> args = null;
     public PathPredicate(List<String> args) {
         this.args = args;
     }
-
     @Override
-    public boolean predicate(RouteDefinition routeDefinition, String toCheck) {
+    public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {
         String name = this.getName();
-        //List<PredicateDefinition> predicates = routeDefinition.getPredicates();
-        ////遍历列表，判断要检查的路径
-        //for (PredicateDefinition predicate : predicates) {
-        //    if (predicate.getName().equals(this.getName())) {
-        //        List<String> args = predicate.getArgs();
-        //        return check(args, toCheck);
-        //    }
-        //}
+        List<PredicateDefinition> predicates = routeDefinition.getPredicates();
+        //遍历断言器列表
+        for (PredicateDefinition predicate : predicates) {
+            //找到这个类型的断言
+            if (predicate.getName().equals(this.getName())) {
+                boolean check = check(predicate.getArgs(), request.getRequestURI());
+                if (check) {
+                    return true;
+                }
+            }
+        }
         //遍历的时候没返回true，就返回false
         return false;
     }
 
     /**
      * 用来检查的辅助函数
-     *
      * @param args    待检验的路由中配置好的路径模式
      * @param toCheck 需要被检验的请求路径
      * @return
@@ -64,4 +65,6 @@ public class PathPredicate implements PredicateDefinition {
         }
         return false;
     }
+
+
 }

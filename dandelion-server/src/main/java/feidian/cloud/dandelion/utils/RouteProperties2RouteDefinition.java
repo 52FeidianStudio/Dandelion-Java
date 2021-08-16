@@ -26,6 +26,8 @@ public class RouteProperties2RouteDefinition {
         RouteDefinition routeDefinition = new RouteDefinition();
         //将routeProperties的属性复制到routeDefinition
         BeanUtils.copyProperties(routeProperties,routeDefinition);
+        routeDefinition.setPredicates(null);
+        routeDefinition.setFilters(null);
         //转化routeProperties的List<String>断言为List<PredicateDefinition>
         List<PredicateDefinition> predicateDefinitionList = null;
         if (routeProperties.getPredicates()==null) {
@@ -53,6 +55,11 @@ public class RouteProperties2RouteDefinition {
         List<PredicateDefinition> predicateDefinitionList = new ArrayList<>();
         for (String s : predicateStringList) {
             PredicateDefinition predicateDefinition = getPredicateDefinition(s);
+            if (predicateDefinition == null) {
+                //如果没找到就抛出错误
+                throw new RuntimeException("没找到所配置断言类型");
+            }
+            predicateDefinitionList.add(predicateDefinition);
         }
         return predicateDefinitionList;
     }
@@ -64,9 +71,7 @@ public class RouteProperties2RouteDefinition {
         String[] split = properties.split("=");
         String title = split[0];
         //获取断言内容
-        List<String> args = Arrays.asList(split);
-        //删除最前面的断言头
-        args.remove(0);
+        List<String> args = Arrays.asList(split[1].split(","));
         //根据断言头，使用简单工厂方式获取断言类
         PredicateDefinition instance = PredicateFactory.getInstance(title,args);
         return instance;

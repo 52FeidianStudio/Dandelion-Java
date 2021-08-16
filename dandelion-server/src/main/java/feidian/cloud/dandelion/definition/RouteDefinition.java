@@ -14,7 +14,7 @@ import java.util.UUID;
  * @date 2021-08-07 9:36
  * 这是路由类，包含路由的所有配置信息
  */
-//@Validated
+
 @NoArgsConstructor
 @Data
 public class RouteDefinition {
