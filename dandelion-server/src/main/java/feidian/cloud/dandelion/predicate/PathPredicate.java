@@ -22,9 +22,17 @@ public class PathPredicate implements PredicateDefinition {
      */
     private String name="Path";
     /**
+     * 断言的描述
+     */
+    private String des="路径匹配断言器";
+    /**
+     * 这个路由断言的备
+     */
+    private String note;
+    /**
      * 配置的信息
      */
-    private List<String> args = null;
+    private List<String> args;
     public PathPredicate(List<String> args) {
         this.args = args;
 
