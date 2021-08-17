@@ -16,7 +16,7 @@ import java.util.*;
 
 public class PredicateUtils {
     /**
-     * 返回一个路由list，表示符合断言的路由
+     * 返回一个路由，表示符合断言的路由
      */
     public static RouteDefinition matchRoute(HttpServletRequest request) {
         Collection<RouteDefinition> routeDefinitions = DandelionController.idRouteMap.values();

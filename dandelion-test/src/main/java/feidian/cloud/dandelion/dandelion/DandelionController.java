@@ -16,6 +16,7 @@ import java.util.Map;
 @RequestMapping("/dandelion")
 @RestController
 public class DandelionController {
+
     @Autowired
     RouteProperties routeProperties;
 

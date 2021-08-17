@@ -27,6 +27,7 @@ public class PathPredicate implements PredicateDefinition {
     private List<String> args = null;
     public PathPredicate(List<String> args) {
         this.args = args;
+
     }
     @Override
     public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {

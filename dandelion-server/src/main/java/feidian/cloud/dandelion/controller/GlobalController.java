@@ -38,7 +38,7 @@ public class GlobalController {
      * 目前还有参数看不到的问题
      */
     @RequestMapping("/**")
-    public String demo(HttpServletRequest request, HttpServletResponse response, @RequestBody HashMap<String, Object> paramMap) {
+    public String demo(HttpServletRequest request, HttpServletResponse response) {
         //请求的路径，例如/test
         String requestUri = request.getRequestURI();
         log.info("全局的入口，请求的地址是{}", requestUri);
@@ -57,16 +57,16 @@ public class GlobalController {
             request.setAttribute("test","见到此值即测试成功");
             if ("GET".equals(request.getMethod())) {
                 //request和response会丢失
-                result = HttpUtil.get(routeDefinition.getUrl()+requestUri,paramMap);
+                result = HttpUtil.get(routeDefinition.getUrl()+requestUri);
                 log.info("【GET】转发结果为:{}",result);
             } else if ("POST".equals(request.getMethod())){
-                result = HttpUtil.post(routeDefinition.getUrl()+requestUri,paramMap);
+                //result = HttpUtil.post(routeDefinition.getUrl()+requestUri,paramMap);
+                result = "xxxx";
                 log.info("【POST】转发结果为:{}",result);
             } else {
                 return "该请求方法目前不支持";
             }
             //todo 进入请求后局部过滤器
-
 
             return result;
         }
