@@ -3,9 +3,7 @@ package feidian.cloud.dandelion.definition;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 
 /**
@@ -37,10 +35,10 @@ public class RouteDefinition {
     /**
      * 断言
      */
-    private List<PredicateDefinition> predicates = new ArrayList<>();
+    private Map<String,PredicateDefinition> predicates = new HashMap<>();
 
     /**
      * 过滤器
      */
-    private List<FilterDefinition> filters = new ArrayList<>();
+    private Map<String,FilterDefinition> filters = new HashMap<>();
 }
