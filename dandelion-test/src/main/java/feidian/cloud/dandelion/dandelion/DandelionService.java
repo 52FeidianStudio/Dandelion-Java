@@ -40,6 +40,7 @@ public class DandelionService {
             int code = (int) map.get("code");
             //如果服务端返回的code是400表示转化成RouteDefinition的时候出了问题
             if (code==400) {
+                log.error("配置信息有误");
                 throw new RuntimeException("配置信息有误");
             }
             log.info("Connect to Dandelion server successfully!");

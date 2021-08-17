@@ -32,7 +32,7 @@ public class DandelionController {
     @RequestMapping("/client")
     public Object client(@RequestBody RouteProperties routeProperties) {
         //返回信息
-        Map<String, Integer> map = new HashMap<>(2);
+        Map<String, Integer> map = new HashMap<>();
         //RouteProperties转化为RouteDefinition
         try {
             RouteDefinition routeDefinition = RouteProperties2RouteDefinition.change(routeProperties);

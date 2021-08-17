@@ -19,7 +19,7 @@ import java.util.Map;
 public class TestController {
 
     @RequestMapping("/test")
-    public Object test(Map<String, String> map) {
-        return map;
+    public Object test() {
+        return "转发成功";
     }
 }
