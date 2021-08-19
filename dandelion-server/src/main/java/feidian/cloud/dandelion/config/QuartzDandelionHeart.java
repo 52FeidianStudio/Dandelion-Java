@@ -1,5 +1,4 @@
 package feidian.cloud.dandelion.config;
-
 import feidian.cloud.dandelion.controller.DandelionHeart;
 import org.quartz.JobDataMap;
 import org.springframework.context.annotation.Bean;
@@ -16,15 +15,14 @@ import java.util.Date;
  * @date 2021/8/14 15:25
  */
 
-/*
-* 这个定时任务用来每20秒去扫描route的列表
-* */
+/**
+ * 这个定时任务用来每20秒去扫描route的列表
+ */
 @Configuration
 public class QuartzDandelionHeart {
-
-    /*
-   创建job类对象，
-   */
+    /**
+     * 创建job类对象
+     */
     @Bean( name="TimeOutJob" )
     @SuppressWarnings("static-access")
     public JobDetailFactoryBean jobDetailFactoryBean() {
@@ -35,10 +33,10 @@ public class QuartzDandelionHeart {
         return bean;
     }
 
-    /*
-    创建Trigger对象 ,在这里设置为每20秒就去检查一边Map列表，去除超时的route
-    目前只要服务开启就不会暂停
-    */
+    /**
+     * 创建Trigger对象 ,在这里设置为每20秒就去检查一边Map列表，去除超时的route
+     * 目前只要服务开启就不会暂停
+     */
     @Bean
     @SuppressWarnings("static-access")
     public SimpleTriggerFactoryBean simpleTriggerFactoryBean() {
@@ -49,10 +47,9 @@ public class QuartzDandelionHeart {
         return bean;
     }
 
-    /*
-        创建触发器实现定时任务
-    */
-
+    /**
+     * 创建触发器实现定时任务
+     */
     @Bean
     @SuppressWarnings("static-access")
     public SchedulerFactoryBean schedulerFactoryBean() {

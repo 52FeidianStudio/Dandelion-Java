@@ -9,10 +9,12 @@ import java.util.List;
  * @date 2021-08-07 9:52
  */
 
-public interface PredicateDefinition {
+public interface PredicateDefinition <T> {
 
-    List<String> getArgs();
+    List<T> getArgs();
     String getName();
+    String getRemark();
+    String getDes();
     /**
      * 默认实现的返回结果是false
      * @param routeDefinition 是待校验的路由对象

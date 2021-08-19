@@ -39,7 +39,6 @@ public class PathPredicate implements PredicateDefinition {
     }
     @Override
     public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {
-        String name = this.getName();
         List<PredicateDefinition> predicates = routeDefinition.getPredicates();
         //遍历断言器列表
         for (PredicateDefinition predicate : predicates) {

@@ -43,7 +43,9 @@ public class RouteProperties2RouteDefinition {
             //如果有断言配置信息就不用管了
             predicateDefinitionList = predicateConversion(routeProperties.getPredicates());
         }
-        routeDefinition.setPredicates(predicateDefinitionList);
+        for (PredicateDefinition predicateDefinition : predicateDefinitionList) {
+            routeDefinition.getPredicates().put(predicateDefinition.getName(),predicateDefinition);
+        }
         //todo 转化过滤
         return routeDefinition;
     }

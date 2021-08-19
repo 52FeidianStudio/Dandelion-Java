@@ -21,8 +21,8 @@ public class PredicateUtils {
     public static RouteDefinition matchRoute(HttpServletRequest request) {
         Collection<RouteDefinition> routeDefinitions = DandelionController.idRouteMap.values();
         for (RouteDefinition routeDefinition : routeDefinitions) {
-            List<PredicateDefinition> predicates = routeDefinition.getPredicates();
-            for (PredicateDefinition predicate : predicates) {
+            Map<String, PredicateDefinition> predicates = routeDefinition.getPredicates();
+            for (PredicateDefinition predicate : predicates.values()) {
                 if (predicate.predicate(routeDefinition, request)) {
                     return routeDefinition;
                 }
