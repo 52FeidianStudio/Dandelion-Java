@@ -45,7 +45,6 @@ public class RouteProperties2RouteDefinition {
         }
         routeDefinition.setPredicates(predicateDefinitionList);
         //todo 转化过滤
-
         return routeDefinition;
     }
     /**
@@ -76,4 +75,5 @@ public class RouteProperties2RouteDefinition {
         PredicateDefinition instance = PredicateFactory.getInstance(title,args);
         return instance;
     }
+
 }

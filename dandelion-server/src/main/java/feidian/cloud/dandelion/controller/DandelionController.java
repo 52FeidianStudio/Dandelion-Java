@@ -2,12 +2,15 @@ package feidian.cloud.dandelion.controller;
 
 import feidian.cloud.autoconfigure.peoperties.RouteProperties;
 import feidian.cloud.dandelion.definition.RouteDefinition;
+import feidian.cloud.dandelion.service.ForwardPost;
 import feidian.cloud.dandelion.utils.RouteProperties2RouteDefinition;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +24,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/dandelion")
 public class DandelionController {
+
     /**
      * key是路由的id
      * value是RouteDefinition对象
@@ -30,7 +34,7 @@ public class DandelionController {
      * 接收配置信息的接口
      */
     @RequestMapping("/client")
-    public Object client(@RequestBody RouteProperties routeProperties) {
+    public Object client(@RequestBody RouteProperties routeProperties, HttpServletRequest request) {
         //返回信息
         Map<String, Integer> map = new HashMap<>();
         //RouteProperties转化为RouteDefinition
@@ -47,10 +51,12 @@ public class DandelionController {
                 url = url.substring(0, url.length() - 2);
             }
             routeDefinition.setUrl(url);
+            System.out.println(url);
             //初始化配置信息到map中
             idRouteMap.put(routeDefinition.getId(),routeDefinition);
             map.put("code",200);
             log.info("客户端连接成功，信息为{}",routeProperties.toString());
+            ForwardPost.forward(routeDefinition);
         } catch (Exception e) {
             log.error("客户端配置有误");
             e.printStackTrace();
