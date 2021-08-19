@@ -36,14 +36,13 @@ public class DandelionService {
                     .body(jsonStr)
                     .timeout(3000)
                     .execute().body();
-            Map map = JSONUtil.toBean(result, Map.class);
-            int code = (int) map.get("code");
+            Map<String, Integer> map = JSONUtil.toBean(result, Map.class);
+            int code = map.get("code");
             //如果服务端返回的code是400表示转化成RouteDefinition的时候出了问题
             if (code==400) {
-                //log.error("配置信息有误");
                 throw new RuntimeException("配置信息有误");
             }
-            //log.info("Connect to Dandelion server successfully!");
+            log.info("Connect to Dandelion server successfully!");
         } catch (Exception e) {
             //如过连接超时就抛出异常
             e.printStackTrace();

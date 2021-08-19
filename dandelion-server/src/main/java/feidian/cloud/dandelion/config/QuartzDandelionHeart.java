@@ -1,6 +1,6 @@
 package feidian.cloud.dandelion.config;
 
-import feidian.cloud.dandelion.controller.DandelionHeart;
+import feidian.cloud.dandelion.service.DandelionHeart;
 import org.quartz.JobDataMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
