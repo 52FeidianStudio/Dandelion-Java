@@ -2,10 +2,8 @@ package feidian.cloud.dandelion.controller;
 
 import feidian.cloud.autoconfigure.peoperties.RouteProperties;
 import feidian.cloud.dandelion.definition.RouteDefinition;
-import feidian.cloud.dandelion.service.ForwardPost;
 import feidian.cloud.dandelion.utils.RouteProperties2RouteDefinition;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,7 +54,6 @@ public class DandelionController {
             idRouteMap.put(routeDefinition.getId(),routeDefinition);
             map.put("code",200);
             log.info("客户端连接成功，信息为{}",routeProperties.toString());
-            ForwardPost.forward(routeDefinition);
         } catch (Exception e) {
             log.error("客户端配置有误");
             e.printStackTrace();

@@ -1,4 +1,5 @@
 package feidian.cloud.dandelion.config;
+
 import feidian.cloud.dandelion.controller.DandelionHeart;
 import org.quartz.JobDataMap;
 import org.springframework.context.annotation.Bean;
@@ -6,18 +7,16 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-
 import java.util.Date;
+
 
 /**
  * @author Zhao Yongsheng
  * @email 1902975393@qq.com
  * @date 2021/8/14 15:25
+ * 执行DandelionHeart类，用来做定时任务，每20秒去扫描route，做心跳检查
  */
 
-/**
- * 这个定时任务用来每20秒去扫描route的列表
- */
 @Configuration
 public class QuartzDandelionHeart {
     /**

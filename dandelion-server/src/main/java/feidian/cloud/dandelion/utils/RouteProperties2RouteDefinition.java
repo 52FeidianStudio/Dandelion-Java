@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Zhang Ruilong
@@ -43,9 +44,11 @@ public class RouteProperties2RouteDefinition {
             //如果有断言配置信息就不用管了
             predicateDefinitionList = predicateConversion(routeProperties.getPredicates());
         }
+        ConcurrentHashMap<String, PredicateDefinition> predicateDefinitionMap = new ConcurrentHashMap<>();
         for (PredicateDefinition predicateDefinition : predicateDefinitionList) {
-            routeDefinition.getPredicates().put(predicateDefinition.getName(),predicateDefinition);
+            predicateDefinitionMap.put(predicateDefinition.getName(),predicateDefinition);
         }
+        routeDefinition.setPredicates(predicateDefinitionMap);
         //todo 转化过滤
         return routeDefinition;
     }

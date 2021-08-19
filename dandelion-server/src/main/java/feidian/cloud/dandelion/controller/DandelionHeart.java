@@ -3,11 +3,11 @@ package feidian.cloud.dandelion.controller;
 import cn.hutool.http.HttpRequest;
 import org.quartz.JobExecutionContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import static feidian.cloud.dandelion.controller.DandelionController.*;
 
-@RestController
+@Component
 public class DandelionHeart  extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) {
@@ -15,12 +15,11 @@ public class DandelionHeart  extends QuartzJobBean {
         for ( String key : idRouteMap.keySet() ) {
             try {
                 if( idRouteMap.get(key).isClient()) {
-
                     String url = idRouteMap.get(key).getUrl();
                     url = url + "/dandelion/heart";
                     System.out.println(url);
                     HttpRequest.post(url)
-                            .timeout(5000)
+                            .timeout(3000)
                             .execute().body();
                 }
             }catch (Exception e){
@@ -28,6 +27,7 @@ public class DandelionHeart  extends QuartzJobBean {
             }
         }
         System.out.println("结束心跳检查");
+        System.out.println(idRouteMap.keySet());
     }
 }
 

@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class PathPredicate implements PredicateDefinition {
     /**
      * 这个路由断言的备
      */
-    private String note;
+    private String remark;
     /**
      * 配置的信息
      */
@@ -39,7 +40,7 @@ public class PathPredicate implements PredicateDefinition {
     }
     @Override
     public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {
-        List<PredicateDefinition> predicates = routeDefinition.getPredicates();
+        Collection<PredicateDefinition> predicates = routeDefinition.getPredicates().values();
         //遍历断言器列表
         for (PredicateDefinition predicate : predicates) {
             //找到这个类型的断言
