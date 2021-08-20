@@ -1,7 +1,9 @@
 package feidian.cloud.dandelion.controller;
 
+import cn.hutool.core.lang.Range;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpRequest;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +21,8 @@ import java.util.Map;
 public class TestController {
 
     @RequestMapping("/test")
-    public Object test() {
+    public Object test(String username, String password) {
+        //System.out.println(map);
         return "转发成功";
     }
 

@@ -2,21 +2,19 @@ package feidian.cloud.dandelion.controller;
 
 import cn.hutool.http.HttpUtil;
 import feidian.cloud.dandelion.definition.RouteDefinition;
-import feidian.cloud.dandelion.utils.IPUtils;
 import feidian.cloud.dandelion.utils.PredicateUtils;
+import feidian.cloud.dandelion.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Zhang Ruilong
@@ -24,7 +22,7 @@ import java.util.Set;
  * @date 2021-08-09 16:40
  */
 @Slf4j
-@RestController
+@Controller
 public class GlobalController {
     /**
      * 路由地址map
@@ -38,37 +36,45 @@ public class GlobalController {
      * 目前还有参数看不到的问题
      */
     @RequestMapping("/**")
-    public String demo(HttpServletRequest request, HttpServletResponse response) {
-        //请求的路径，例如/test
+    public Object demo(HttpServletRequest request, HttpServletResponse response,String username, String password) {
+        //类似GET请求参数的数量，因为axios地POST默认是json，这个size为0，但是原始表单是可以获得到的
+
+
+        //请求的路径，会自动去除ip+端口号，得到结果形如：/test
         String requestUri = request.getRequestURI();
-        log.info("全局的入口，请求的地址是{}", requestUri);
-        String ipAddr = IPUtils.getIpAddr(request);
-        log.info("发起请求的IP地址是{}", ipAddr);
+        log.info("请求的地址是{}", requestUri);
+
+
         RouteDefinition routeDefinition = PredicateUtils.matchRoute(request);
-        if (routeDefinition==null) {
-            return "没有匹配到路由";
-        } else {
-            //todo 开始进行全局过滤
+        //if (routeDefinition==null) {
+        //    return "没有匹配到路由";
+        //} else {
+        //    //todo 开始进行全局过滤
+        //
+        //    //todo 进入请求前局部过滤器
+        //    //这里的过滤可能已经包含了对requestUri的过滤
+        //    //todo 进行转发请求
+        //    String result;
+        //    request.setAttribute("test","见到此值即测试成功");
+        //
+        //    String url = routeDefinition.getUrl()+requestUri;
 
-            //todo 进入请求前局部过滤器
-            //这里的过滤可能已经包含了对requestUri的过滤
-            //todo 进行转发请求
-            String result;
-            request.setAttribute("test","见到此值即测试成功");
-            if ("GET".equals(request.getMethod())) {
-                //request和response会丢失
-                result = HttpUtil.get(routeDefinition.getUrl()+requestUri);
-                log.info("【GET】转发结果为:{}",result);
-            } else if ("POST".equals(request.getMethod())){
-                //result = HttpUtil.post(routeDefinition.getUrl()+requestUri,paramMap);
-                result = "xxxx";
-                log.info("【POST】转发结果为:{}",result);
-            } else {
-                return "该请求方法目前不支持";
-            }
-            //todo 进入请求后局部过滤器
-
-            return result;
-        }
+            //if ("GET".equals(request.getMethod())) {
+            //    //request和response会丢失
+            //    result = HttpUtil.get(routeDefinition.getUrl()+requestUri);
+            //    log.info("【GET】转发结果为:{}",result);
+            //} else if ("POST".equals(request.getMethod())){
+            //    //result = HttpUtil.post(routeDefinition.getUrl()+requestUri,paramMap);
+            //    result = "xxxx";
+            //    log.info("【POST】转发结果为:{}",result);
+            //} else {
+            //    return "该请求方法目前不支持";
+            //}
+            ////todo 进入请求后局部过滤器
+            //
+            //return result;
+        request.setAttribute("url",requestUri);
+        return "forward:/dandelion/forward";
     }
 }
+

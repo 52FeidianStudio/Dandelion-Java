@@ -4,6 +4,8 @@ import cn.hutool.cron.CronUtil;
 import cn.hutool.cron.task.Task;
 import cn.hutool.http.HttpRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import javax.annotation.PostConstruct;
 import static feidian.cloud.dandelion.controller.DandelionController.*;
 
@@ -19,10 +21,11 @@ import static feidian.cloud.dandelion.controller.DandelionController.*;
  * 注册到spring容器中
  */
 @Component
+@CrossOrigin
 public class DandelionHeart {
     @PostConstruct
     public void heart() {
-        CronUtil.schedule("0/5 * * * * ? ", new Task() {
+        CronUtil.schedule("0/20 * * * * ? ", new Task() {
             @Override
             public void execute() {
                 System.out.println("开始心跳检查");

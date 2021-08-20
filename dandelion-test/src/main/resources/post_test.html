@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>post_test</title>
+</head>
+<body>
+
+<script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+<script>
+    axios.post(
+        "http://localhost:8000/dandelion/post",
+        {
+            username:11,
+            password:{
+                type:11,
+                value:"xxxx"
+            }
+        }
+        ).then(
+        function(response){
+            console.log(response)
+        },
+        function(err){
+            //失败后的操作
+        }
+    )
+</script>
+
+</body>
+</html>
