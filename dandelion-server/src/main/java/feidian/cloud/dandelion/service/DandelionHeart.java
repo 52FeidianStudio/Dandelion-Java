@@ -35,7 +35,7 @@ public class DandelionHeart {
                             String url = idRouteMap.get(key).getUrl();
                             url = url + "/dandelion/heart";
                             System.out.println(url);
-                            HttpRequest.post(url)
+                            HttpRequest.get(url)
                                     .timeout(3000)
                                     .execute().body();
                         }

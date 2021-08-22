@@ -79,7 +79,7 @@ public class ForwardController {
      * 还有一种情况是post表单
      */
     @RequestMapping("/dandelion/formPost")
-    public String formPost(HttpServletRequest request,@RequestBody Map map) {
+    public String formPost(HttpServletRequest request) {
         //在GlobalController中已经写了要转发的url
         String url = (String) request.getAttribute("url");
         //获取参数
