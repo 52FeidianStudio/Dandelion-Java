@@ -1,20 +1,16 @@
 package feidian.cloud.dandelion.controller;
 
-import cn.hutool.http.HttpUtil;
 import feidian.cloud.dandelion.definition.RouteDefinition;
 import feidian.cloud.dandelion.utils.PredicateUtils;
-import feidian.cloud.dandelion.utils.ServletUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+
 
 /**
  * @author Zhang Ruilong
@@ -36,7 +32,7 @@ public class GlobalController {
      * 目前还有参数看不到的问题
      */
     @RequestMapping("/**")
-    public Object demo(HttpServletRequest request, HttpServletResponse response,String username, String password) {
+    public Object demo(HttpServletRequest request, HttpServletResponse response, String username, String password) {
         //类似GET请求参数的数量，因为axios地POST默认是json，这个size为0，但是原始表单是可以获得到的
 
 

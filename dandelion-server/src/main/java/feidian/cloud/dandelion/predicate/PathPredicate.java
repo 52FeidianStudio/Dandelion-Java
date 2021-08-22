@@ -5,7 +5,6 @@ import feidian.cloud.dandelion.definition.RouteDefinition;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
