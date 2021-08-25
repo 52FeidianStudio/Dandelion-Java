@@ -1,5 +1,7 @@
 package feidian.cloud.dandelion.definition;
 
+import feidian.cloud.dandelion.predicate.PathPredicate;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +15,7 @@ import java.util.*;
  * 这是路由类，包含路由的所有配置信息
  */
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class RouteDefinition {
@@ -41,4 +44,5 @@ public class RouteDefinition {
      * 过滤器
      */
     private Map<String,FilterDefinition> filters = new HashMap<>();
+
 }
