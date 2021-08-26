@@ -42,7 +42,7 @@ public class PredicateUtils {
      */
     public static void changePredicateConfiguration(RouteProperties routeProperties, RouteDefinition routeDefinition) {
         //转化routeProperties的List<String>断言为List<PredicateDefinition>
-        List<PredicateDefinition> predicateDefinitionList = null;
+        List<PredicateDefinition> predicateDefinitionList;
         List<String> predicateStringList = routeProperties.getPredicates();
         if (predicateStringList ==null) {
             //如果没有配置断言，就进行默认配置一个path断言，要不无法进行服务转发

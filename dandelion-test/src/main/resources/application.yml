@@ -5,9 +5,7 @@ spring:
     name: test
 dandelion:
   route:
-    id: aaa
+    id: 测试
     url: http://localhost:8001
     predicates:
       - Path=/test/**
-    filters:
-      - StripPrefix=1
