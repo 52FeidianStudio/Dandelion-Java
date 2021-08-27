@@ -3,10 +3,11 @@ package feidian.cloud.dandelion.predicate;
 import feidian.cloud.dandelion.definition.PredicateBase;
 import feidian.cloud.dandelion.definition.PredicateDefinition;
 import feidian.cloud.dandelion.definition.RouteDefinition;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -16,8 +17,8 @@ import java.util.List;
  * @date 2021-08-09 15:43
  */
 @EqualsAndHashCode(callSuper = true)
-@Data
 @NoArgsConstructor
+@Data
 public class PathPredicate<T> extends PredicateBase {
     String name = "Path";
     String des = "路径匹配断言器";
@@ -33,18 +34,13 @@ public class PathPredicate<T> extends PredicateBase {
 
     @Override
     public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {
-        Collection<PredicateDefinition> predicates = routeDefinition.getPredicates().values();
-        //遍历断言器列表
-        for (PredicateDefinition predicate : predicates) {
-            //找到这个类型的断言
-            if (predicate.getName().equals(this.getName())) {
-                String url = (String) request.getAttribute("url");
-                boolean check = check(predicate.getConfig(), url);
-                    return check;
-            }
+        PredicateDefinition predicateDefinition = routeDefinition.getPredicates().get(this.name);
+        if (predicateDefinition==null) {
+            return false;
         }
-        //遍历的时候没返回true，就返回false
-        return false;
+        String url = (String) request.getAttribute("url");
+        boolean check = check(predicateDefinition.getConfig(), url);
+        return check;
     }
 
     /**
