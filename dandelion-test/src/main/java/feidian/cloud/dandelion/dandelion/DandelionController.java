@@ -16,10 +16,8 @@ import java.util.Map;
 @RequestMapping("/dandelion")
 @RestController
 public class DandelionController {
-
     @Autowired
     RouteProperties routeProperties;
-
     /**
      * 和服务器进行心跳检查的接口
      */

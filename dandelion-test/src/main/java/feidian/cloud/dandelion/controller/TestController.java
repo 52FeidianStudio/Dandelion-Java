@@ -14,11 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/product")
 public class TestController {
-
     @RequestMapping("/test")
     public Object test() {
         System.out.println("请求成功");
         return "转发成功";
     }
-
 }
