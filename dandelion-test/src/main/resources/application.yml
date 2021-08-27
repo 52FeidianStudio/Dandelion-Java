@@ -5,7 +5,7 @@ spring:
     name: test
 dandelion:
   route:
-    id: 测试
+    id: 商品服务
     url: http://localhost:8001
     predicates:
-      - Path=/test/**
+      - Path=/product/**

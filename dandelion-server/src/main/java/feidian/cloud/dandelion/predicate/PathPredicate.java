@@ -38,10 +38,9 @@ public class PathPredicate<T> extends PredicateBase {
         for (PredicateDefinition predicate : predicates) {
             //找到这个类型的断言
             if (predicate.getName().equals(this.getName())) {
-                boolean check = check(predicate.getConfig(), request.getRequestURI());
-                if (check) {
-                    return true;
-                }
+                String url = (String) request.getAttribute("url");
+                boolean check = check(predicate.getConfig(), url);
+                    return check;
             }
         }
         //遍历的时候没返回true，就返回false
@@ -55,7 +54,7 @@ public class PathPredicate<T> extends PredicateBase {
      */
     private boolean check(List<String> args, String toCheck) {
         for (String arg : args) {
-            String begin = arg;
+            String begin=null;
             if (arg.endsWith("/**")) {
                 //去掉/**后的路径，判断时候
                 begin = arg.substring(0, arg.length() - 3);

@@ -1,9 +1,12 @@
 package feidian.cloud.dandelion.controller;
 
 import cn.hutool.http.HttpUtil;
+import feidian.cloud.dandelion.definition.RouteDefinition;
+import feidian.cloud.dandelion.utils.PredicateUtils;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -16,7 +19,7 @@ import java.util.Map;
  * @date 2021-08-20 17:14
  * @description
  */
-@RestController
+@Controller
 public class ForwardController {
 
     public Map<String, Object> getParameterMap(HttpServletRequest request){
@@ -36,7 +39,6 @@ public class ForwardController {
     @RequestMapping("/dandelion/forward")
     public String forward(HttpServletRequest request) {
         int parameterSize = request.getParameterMap().size();
-
         String method = request.getMethod();
         if ("GET".equals(method)) {
             //GET请求转发
@@ -53,9 +55,15 @@ public class ForwardController {
     }
 
     @RequestMapping("/dandelion/get")
+    @ResponseBody
     public String get(HttpServletRequest request) {
+        RouteDefinition routeDefinition = PredicateUtils.matchRoute(request);
+        if (routeDefinition==null) {
+            return "没有匹配到路由";
+        }
         //在GlobalController中已经写了要转发的url
         String url = (String) request.getAttribute("url");
+        url = routeDefinition.getUrl()+url;
         //获取参数
         Map<String, Object> parameterMap = getParameterMap(request);
         //请求转发
@@ -68,6 +76,7 @@ public class ForwardController {
      * @return
      */
     @RequestMapping("/dandelion/post")
+    @ResponseBody
     public String post(HttpServletRequest request,@RequestBody Map map) {
         //在GlobalController中已经写了要转发的url
         String url = (String) request.getAttribute("url");
@@ -79,6 +88,7 @@ public class ForwardController {
      * 还有一种情况是post表单
      */
     @RequestMapping("/dandelion/formPost")
+    @ResponseBody
     public String formPost(HttpServletRequest request) {
         //在GlobalController中已经写了要转发的url
         String url = (String) request.getAttribute("url");

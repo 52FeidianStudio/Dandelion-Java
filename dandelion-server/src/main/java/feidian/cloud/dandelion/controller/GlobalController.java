@@ -1,7 +1,6 @@
 package feidian.cloud.dandelion.controller;
 
 import feidian.cloud.dandelion.definition.RouteDefinition;
-import feidian.cloud.dandelion.utils.PredicateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,15 +32,12 @@ public class GlobalController {
      */
     @RequestMapping("/**")
     public Object demo(HttpServletRequest request, HttpServletResponse response, String username, String password) {
-        //类似GET请求参数的数量，因为axios地POST默认是json，这个size为0，但是原始表单是可以获得到的
-
-
         //请求的路径，会自动去除ip+端口号，得到结果形如：/test
         String requestUri = request.getRequestURI();
         log.info("请求的地址是{}", requestUri);
+        request.setAttribute("url",requestUri);
 
 
-        RouteDefinition routeDefinition = PredicateUtils.matchRoute(request);
         //if (routeDefinition==null) {
         //    return "没有匹配到路由";
         //} else {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -25,7 +26,7 @@ public class DandelionController {
     /**
      * 存放了客户端的路由信息
      */
-    public static Map<String, RouteDefinition> idRouteMap = new HashMap<>();
+    public static Map<String, RouteDefinition> idRouteMap = new ConcurrentHashMap<>();
     /**
      * 接收配置信息的接口
      */

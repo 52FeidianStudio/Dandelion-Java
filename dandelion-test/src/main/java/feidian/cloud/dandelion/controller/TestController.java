@@ -1,14 +1,8 @@
 package feidian.cloud.dandelion.controller;
 
-import cn.hutool.core.lang.Range;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpRequest;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 /**
  * @author Zhang Ruilong
@@ -18,11 +12,12 @@ import java.util.Map;
  */
 @Slf4j
 @RestController
+@RequestMapping("/product")
 public class TestController {
 
     @RequestMapping("/test")
-    public Object test(String username, String password) {
-        //System.out.println(map);
+    public Object test() {
+        System.out.println("请求成功");
         return "转发成功";
     }
 
