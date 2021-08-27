@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <style type="text/css">
+        .pag-set-bg{width:100%;height:100%;overflow-x:hidden;overflow-y:auto;}
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="inputLine">
+        <span>所在区域</span>
+        <select name="" v-model="countryName" @change="selectCountry">
+            <option :value="item" v-for="(item,index) in area">
+                {{item.country}}
+                <svg class="icon icon-arrow-bottom" aria-hidden="true">
+                    <use xlink:href="#icon-arrow-bottom"></use>
+                </svg>
+            </option>
+        </select>
+        <select name="" v-model="cityName">
+            <option :value="item" v-for="(item,index) in countryName.city">
+                {{item}}
+                <svg class="icon icon-arrow-bottom" aria-hidden="true">
+                    <use xlink:href="#icon-arrow-bottom"></use>
+                </svg>
+            </option>
+        </select>
+    </div>
+</div>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+<script>
+    new Vue({
+        el:'#app',
+        data:{
+            list:[
+                {
+                    text: '这是第1条数据'
+                }
+            ],
+            UniversityList:[],
+            schoolList:[],
+            countryName:{},
+            cityName:"请选择城市",
+            area:[
+                {
+                    "country":"美国",
+                    "city":[
+                        "纽约",
+                        "洛杉矶",
+                        "旧金山",
+                        "西雅图",
+                        "波士顿",
+                        "休斯顿",
+                        "圣地亚哥",
+                        "芝加哥",
+                        "其它",
+                    ]
+                },
+                {
+                    "country":"加拿大",
+                    "city":[
+                        "温哥华",
+                        "多伦多",
+                        "蒙特利尔",
+                        "其它"
+                    ]
+                },
+                {
+                    "country":"澳大利亚",
+                    "city":[
+                        "悉尼",
+                        "墨尔本",
+                        "其它"
+                    ]
+                },
+                {
+                    "country":"新加坡",
+                    "city":[
+                        "新加坡"
+                    ]
+                },
+
+            ],
+        },
+
+        methods:{
+            selectCountry(value){
+                this.cityName=this.countryName.city[0];
+            },
+        }
+    })
+</script>
+</body>
+</html>

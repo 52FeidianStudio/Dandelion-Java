@@ -2,10 +2,11 @@ package feidian.cloud.dandelion.controller;
 
 import feidian.cloud.dandelion.definition.PredicateDefinition;
 import feidian.cloud.dandelion.definition.RouteDefinition;
-import feidian.cloud.dandelion.predicate.PathPredicate;
-import feidian.cloud.dandelion.vo.PredicateVo;
+import feidian.cloud.dandelion.predicate.PredicateFactory;
+import feidian.cloud.dandelion.vo.PredicateVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,16 +26,12 @@ public class PredicateController {
      */
     @ApiOperation("获取断言列表")
     @GetMapping("/list")
-    public ArrayList<PredicateVo> getPredicateList(){
+    public ArrayList<PredicateVO> getPredicateList(){
         Map<String, RouteDefinition> idRouteMap = DandelionController.idRouteMap;
-        ArrayList<PredicateVo> list = new ArrayList<>();
+        ArrayList<PredicateVO> list = new ArrayList<>();
         for(RouteDefinition routeDefinition : idRouteMap.values()){
             for (PredicateDefinition predicateDefinition : routeDefinition.getPredicates().values()){
-                list.add(new PredicateVo(routeDefinition.getId(),
-                        predicateDefinition.getName(),
-                        predicateDefinition.getDes(),
-                        predicateDefinition.getRemark(),
-                        predicateDefinition.getArgs()));
+                list.add(new PredicateVO(routeDefinition.getId(),predicateDefinition));
             }
         }
         return list;
@@ -54,13 +51,14 @@ public class PredicateController {
             //没有这个路由
             Map.put("code",400);
         }else {
-            if (idRouteMap.get(id).getPredicates().get(predicateName)==null){
+            Map<String, PredicateDefinition> predicates = idRouteMap.get(id).getPredicates();
+            if (predicates.get(predicateName)==null){
                 //没有这个断言
                 Map.put("code",400);
             }else {
-                idRouteMap.get(id).getPredicates().remove(predicateName);
-                Map.put("code",200);
                 //有这个服务与断言，就删除这个断言，返回200
+                predicates.remove(predicateName);
+                Map.put("code",200);
             }
         }
         return Map;
@@ -71,27 +69,47 @@ public class PredicateController {
      */
     @ApiOperation("修改断言")
     @PostMapping("/update")
-    public Object updatePredicate(@RequestBody Map map,@RequestBody List<String> config){
+    public Object updatePredicate(@RequestBody Map map){
         Map<String, RouteDefinition> idRouteMap = DandelionController.idRouteMap;
         String id = (String) map.get("id");
-        String predicate_name = (String) map.get("predicate_name");
-        String des = (String) map.get("des");
+        String name = (String) map.get("name");
         String remark = (String) map.get("remark");
+        List<String> config = (List<String>) map.get("config");
         if (idRouteMap.get(id)==null){
             map.put("code",400);
         }else {
-            if (idRouteMap.get(id).getPredicates().get(predicate_name)==null){
+            Map<String, PredicateDefinition> predicates = idRouteMap.get(id).getPredicates();
+            PredicateDefinition predicateDefinition = predicates.get(name);
+            if (predicateDefinition ==null){
                 map.put("code",400);
             }else {
-                PathPredicate predicate= (PathPredicate) idRouteMap.get(id).getPredicates().get(predicate_name);
-                predicate.setRemark(remark);
-                predicate.setName(predicate_name);
-                predicate.setDes(des);
-                predicate.setArgs(config);
+                predicateDefinition.setRemark(remark);
+                predicateDefinition.setConfig(config);
                 map.put("code",200);
             }
         }
         return map;
         //学长，这里的config数据出不来
+    }
+    /**
+     * 为服务创建一个断言
+     */
+    @PostMapping("/insert")
+    public Map insert(@RequestBody Map map) {
+        Map<String, RouteDefinition> idRouteMap = DandelionController.idRouteMap;
+        Object id = map.get("id");
+        RouteDefinition routeDefinition = idRouteMap.get(id);
+        HashMap<Object, Object> result = new HashMap<>();
+        if (!(routeDefinition==null)) {
+            String name = (String) map.get("name");
+            List config = (List) map.get("config");
+            String remark = (String) map.get("remark");
+            PredicateDefinition instance = PredicateFactory.getInstance(name, config, remark);
+            routeDefinition.getPredicates().put(instance.getName(),instance);
+            result.put("code",200);
+            return result;
+        }
+        result.put("code",400);
+        return result;
     }
 }

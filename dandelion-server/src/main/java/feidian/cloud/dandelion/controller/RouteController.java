@@ -57,12 +57,12 @@ public class RouteController {
     public Object findRouteById(@RequestParam("routeId") String routeId){
         Map<String, RouteDefinition> idRouteMap = DandelionController.idRouteMap;
         Map<String, Integer> map = new HashMap<>();
-        System.out.println(routeId);
         if (idRouteMap.get(routeId)==null){
             map.put("code",400);
             return map;
         }else {
-            return idRouteMap.get(routeId);
+            RouteDefinition routeDefinition = idRouteMap.get(routeId);
+            return routeDefinition;
         }
     }
 
@@ -71,17 +71,22 @@ public class RouteController {
      */
     @ApiOperation("更新配置")
     @PostMapping("/update")
-    public Object updateRoute(@RequestBody RouteDefinition routeDefinition){
+    public Object updateRoute(@RequestBody Map map){
         Map<String, RouteDefinition> idRouteMap = DandelionController.idRouteMap;
-        Map<String, Integer> map = new HashMap<>();
-        if (idRouteMap.get(routeDefinition.getId())==null){
-            map.put("code",400);
+        Map<String, Integer> result = new HashMap<>();
+        Object id = map.get("id");
+        RouteDefinition routeDefinition = idRouteMap.get(id);
+        if (routeDefinition ==null){
+            result.put("code",400);
             //没有此配置，就返回400错误
-        }else {
-            idRouteMap.put(routeDefinition.getId(),routeDefinition);
-            map.put("code",200);
+        } else {
+            routeDefinition.setId((String) map.get("id"));
+            routeDefinition.setOrder(Integer.valueOf((Integer) map.get("order")));
+            routeDefinition.setUrl((String) map.get("url"));
+            routeDefinition.setClient(Boolean.getBoolean((String) map.get("client")));
+            result.put("code",200);
         }
-        return map;
+        return result;
     }
 
     /**
@@ -92,12 +97,19 @@ public class RouteController {
     public Object insertRoute(@RequestBody RouteDefinition routeDefinition){
         Map<String, RouteDefinition> idRouteMap = DandelionController.idRouteMap;
         Map<String, Integer> map = new HashMap<>();
-        //先判断有与该配置id相同的配置存在，若有就返回400，没有就创建，返回200
-        if (idRouteMap.get(routeDefinition.getId())==null){
+        map.put("code",400);
+        if (routeDefinition.getId().equals("")) {
+            return map;
+        }
+        //先判断有与该配置id相同的配置存在，若有就修改个别信息，没有就创建，返回200
+        RouteDefinition routeDefinition1 = idRouteMap.get(routeDefinition.getId());
+        if (routeDefinition1==null){
             idRouteMap.put(routeDefinition.getId(),routeDefinition);
             map.put("code",200);
         } else {
-            map.put("code",400);
+            routeDefinition1.setId(routeDefinition.getId());
+            routeDefinition1.setUrl(routeDefinition.getUrl());
+            routeDefinition1.setOrder(routeDefinition.getOrder());
         }
         return map;
     }
@@ -108,8 +120,8 @@ public class RouteController {
     @GetMapping("/predicate/list")
     public Object getRoutePredicateList(){
         Map<String,String> map = new HashMap<>();
-        map.put("name","Path");
-        map.put("des","路径匹配断言器");
+        map.put("Path","路径匹配断言器");
+        map.put("Date","日期断言器");
         return map;
     }
 }

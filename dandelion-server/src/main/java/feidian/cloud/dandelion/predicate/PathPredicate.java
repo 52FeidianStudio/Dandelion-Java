@@ -3,7 +3,7 @@ package feidian.cloud.dandelion.predicate;
 import feidian.cloud.dandelion.definition.PredicateBase;
 import feidian.cloud.dandelion.definition.PredicateDefinition;
 import feidian.cloud.dandelion.definition.RouteDefinition;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
@@ -15,25 +15,21 @@ import java.util.List;
  * @email 970586718@qq.com
  * @date 2021-08-09 15:43
  */
+@EqualsAndHashCode(callSuper = true)
+@Data
 @NoArgsConstructor
-public class PathPredicate extends PredicateBase implements PredicateDefinition {
+public class PathPredicate<T> extends PredicateBase {
+    String name = "Path";
+    String des = "路径匹配断言器";
 
     public PathPredicate(List<String> args) {
-        init();
-        setArgs(args);
+        setConfig(args);
     }
 
     @Override
-    public void init() {
-        this.name = "Path";
-        this.des = "路径匹配断言器";
+    public void setConfig(List args) {
+        this.config = args;
     }
-
-    @Override
-    public void setArgs(List args) {
-        this.args = args;
-    }
-
 
     @Override
     public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {
@@ -42,7 +38,7 @@ public class PathPredicate extends PredicateBase implements PredicateDefinition 
         for (PredicateDefinition predicate : predicates) {
             //找到这个类型的断言
             if (predicate.getName().equals(this.getName())) {
-                boolean check = check(predicate.getArgs(), request.getRequestURI());
+                boolean check = check(predicate.getConfig(), request.getRequestURI());
                 if (check) {
                     return true;
                 }

@@ -3,6 +3,7 @@ package feidian.cloud.dandelion.service;
 import cn.hutool.cron.CronUtil;
 import cn.hutool.cron.task.Task;
 import cn.hutool.http.HttpRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
@@ -22,13 +23,13 @@ import static feidian.cloud.dandelion.controller.DandelionController.*;
  */
 @Component
 @CrossOrigin
+@Slf4j
 public class DandelionHeart {
     @PostConstruct
     public void heart() {
         CronUtil.schedule("0/20 * * * * ? ", new Task() {
             @Override
             public void execute() {
-                System.out.println("开始心跳检查");
                 for ( String key : idRouteMap.keySet() ) {
                     try {
                         if( idRouteMap.get(key).isClient()) {
@@ -42,8 +43,7 @@ public class DandelionHeart {
                         idRouteMap.remove(key);
                     }
                 }
-                System.out.println("结束心跳检查");
-                System.out.println(idRouteMap.keySet());
+                System.out.println("现有服务:"+idRouteMap.keySet());
             }
         });
         // 支持秒级别定时任务

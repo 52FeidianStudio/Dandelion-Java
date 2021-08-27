@@ -42,7 +42,7 @@ public class DandelionController {
             //初始化配置信息到map中
             idRouteMap.put(routeDefinition.getId(),routeDefinition);
             map.put("code",200);
-            log.info("客户端连接成功，信息为{}",routeProperties.toString());
+            log.info("客户端连接成功，信息为{}",routeDefinition.toString());
         } catch (Exception e) {
             log.error("客户端配置有误");
             e.printStackTrace();

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Setter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  * @description
  */
 @Data
-public class PredicateBase <T>{
+public abstract class PredicateBase <T> implements PredicateDefinition{
     /**
      * 断言的名字
      */
@@ -30,5 +31,12 @@ public class PredicateBase <T>{
      * 配置的信息
      */
     @Setter(AccessLevel.NONE)
-    public List<T> args;
+    public List<T> config;
+
+
+    @Override
+    public boolean predicate(RouteDefinition routeDefinition, HttpServletRequest request) {
+        return false;
+    }
+
 }
